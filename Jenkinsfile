@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'node:18'
+            image 'node:20'
             args '-u root'
         }
     }
@@ -9,14 +9,13 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                echo 'Checking out repository'
                 checkout scm
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'node -v'
-                sh 'npm -v'
                 sh 'npm install'
             }
         }
