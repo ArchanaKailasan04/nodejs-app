@@ -2,10 +2,9 @@ pipeline {
     agent any
 
     stages {
-
-        stage('Clone Repo') {
+        stage('Checkout') {
             steps {
-                git 'https://github.com/Archanakailasan04/nodejs-app.git'
+                checkout scm
             }
         }
 
@@ -15,25 +14,11 @@ pipeline {
             }
         }
 
-        stage('Test App') {
+        stage('Run Tests') {
             steps {
-                sh 'echo "No tests added yet"'
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t node-app:latest .'
-            }
-        }
-
-        stage('Deploy to Kubernetes') {
-            steps {
-                sh '''
-                kubectl apply -f deployment.yaml
-                kubectl apply -f service.yaml
-                '''
+                sh 'npm test'
             }
         }
     }
 }
+
